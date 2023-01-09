@@ -2,22 +2,32 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const csrf = require("tiny-csrf");
+const cookieParser = require("cookie-parser");
+
 const flash = require("connect-flash");
 const { Admin } = require("./models");
 const session = require("express-session");
 const passport = require("passport");
 app.use(express.urlencoded({ extended: false }));
+
+app.use(cookieParser("ssh!!!! some secret string"));
+app.use(csrf("this_should_be_32_character_long", ["POST", "PUT", "DELETE"]));
 app.use(bodyParser.json());
 app.use(flash());
 
 app.set("view engine", "ejs");
 
 app.get("/", (request, response) => {
-  response.render("homepage");
+  response.render("homepage", {
+    csrfToken: request.csrfToken(),
+  });
 });
 
 app.get("/admin-signup", (request, response) => {
-  response.render("admin-signup");
+  response.render("admin-signup", {
+    csrfToken: request.csrfToken(),
+  });
 });
 
 app.post("/admin", async (request, response) => {
@@ -29,7 +39,7 @@ app.post("/admin", async (request, response) => {
       email: request.body.email,
       password: request.body.password,
     });
-    response.redirect("/login");
+    response.redirect("/admin-page");
   } catch (error) {
     console.log(error);
   }
@@ -41,10 +51,15 @@ app.get("/admins", (request, response) => {
 });
 
 app.get("/admin-page", async (request, response) => {
-  response.render("admin-page", { firstName: Admin.firstName });
+  response.render("admin-page", {
+    firstName: Admin.firstName,
+    csrfToken: request.csrfToken(),
+  });
 });
 
 app.get("/login", (request, response) => {
-  response.render("login");
+  response.render("login", {
+    csrfToken: request.csrfToken(),
+  });
 });
 module.exports = app;
