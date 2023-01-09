@@ -9,7 +9,11 @@
     <title>Admin Page</title>
 </head>
 <body>
-    Welcome <% firstName %>
-    <a href="/">Sign Out</a>
+    Welcome <%= firstName %>
+    <a href="/signout">Sign Out</a>
+    <div>
+        <a href="">Create election</a>
+        <a href="/admin/addVoter">Register voter</a>
+    </div>
 </body>
 </html>
