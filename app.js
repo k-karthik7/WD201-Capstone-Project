@@ -28,6 +28,11 @@ app.use(
   })
 );
 
+app.use((request, response, next) => {
+  response.locals.messages = request.flash();
+  next();
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -184,7 +189,7 @@ app.post(
         publicurl: request.body.publicUrl,
         adminID: request.user.id,
       });
-
+      request.flash("info", "Election created");
       return response.redirect("/adminpage");
     } catch (error) {
       console.log(error);
