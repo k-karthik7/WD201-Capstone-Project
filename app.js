@@ -173,7 +173,7 @@ app.post(
   }
 );
 
-app.get("/election", (request, response) => {
+app.get("/election/createElection", (request, response) => {
   response.render("create-election", {
     csrfToken: request.csrfToken(),
   });
