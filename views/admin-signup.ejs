@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Admin Signup</title>
+</head>
+<body>
+    <div class="grid grid-cols-6">
+        <div class="col-start-3 col-span-2">
+            <h1 class="text-2xl font-semibold">Please sign up if you are an Admin</h1>
+            <form action="/admin" method="post">
+                <div class="py-3">
+                    <label for="firstName">First Name</label>
+                    <input type="text" name="firstName" id="" placeholder="Enter your first name" class="border border-grey-300 text-gray-900 rounded p-2 w-full">
+                </div>
+                <div class="py-3">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" name="lastName" id="" placeholder="Enter your last name"
+                    class="border border-grey-300 text-gray-900 rounded p-2 w-full">
+                </div>
+                <div class="py-3">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="" placeholder="yourmail@gmail.com"
+                    class="border border-grey-300 text-gray-900 rounded p-2 w-full">
+                </div>
+                <div class="py-3">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="" placeholder="**********"
+                    class="border border-grey-300 text-gray-900 rounded p-2 w-full">
+                </div>
+                <div class="py-3">
+                    <button type="submit" class="text-white bg-green-600 hover:bg-green-800 font-medium rounded py-3 px-3">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
