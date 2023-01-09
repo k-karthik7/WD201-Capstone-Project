@@ -184,7 +184,7 @@ app.post(
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     try {
-      await Election.createElection({
+      await Election.create({
         electionName: request.body.electionName,
         publicurl: request.body.publicUrl,
         adminID: request.user.id,
