@@ -8,9 +8,10 @@ const passport = require("passport");
 const connectEnsureLogin = require("connect-ensure-login");
 const session = require("express-session");
 const LocalStrategy = require("passport-local");
+const path = require("path");
 
 const flash = require("connect-flash");
-const { Admin, Voters } = require("./models");
+const { Admin, Voters, Election } = require("./models");
 app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser("ssh!!!! some secret string"));
@@ -66,6 +67,7 @@ passport.deserializeUser((id, done) => {
 });
 
 app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 app.get("/", (request, response) => {
   response.render("homepage", {
@@ -100,16 +102,14 @@ app.post("/admin", async (request, response) => {
   // request.flash("info", "Sign up successfull")
 });
 
-app.get("/admins", (request, response) => {
-  console.log(request.body);
-});
-
 app.get(
   "/adminpage",
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
+    const id = await Admin.findByPk(request.user.id);
+    const fName = id.dataValues.firstName;
     response.render("admin-page", {
-      firstName: Admin.firstName,
+      firstName: fName,
       csrfToken: request.csrfToken(),
     });
   }
@@ -127,8 +127,7 @@ app.post(
     failureRedirect: "/login",
     failureFlash: true,
   }),
-  (request, response) => {
-    console.log(request.user);
+  async (request, response) => {
     response.redirect("/adminpage");
   }
 );
@@ -174,4 +173,23 @@ app.get("/election", (request, response) => {
     csrfToken: request.csrfToken(),
   });
 });
+
+app.post(
+  "/election/createElection",
+  connectEnsureLogin.ensureLoggedIn(),
+  async (request, response) => {
+    try {
+      await Election.createElection({
+        electionName: request.body.electionName,
+        publicurl: request.body.publicUrl,
+        adminID: request.user.id,
+      });
+
+      return response.redirect("/adminpage");
+    } catch (error) {
+      console.log(error);
+      return response.redirect("/election/createElection");
+    }
+  }
+);
 module.exports = app;
