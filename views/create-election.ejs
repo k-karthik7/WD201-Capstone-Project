@@ -15,6 +15,7 @@
                 Create an Election
             </div>
             <form action="/election/createElection" method="post">
+                <input type="hidden" name="_csrf" id="" value="<%= csrfToken %>">
                 <div class="py-2">
                     <label for="electionName">Election Name</label>
                     <input type="text" name="electionName" placeholder="Election name" class="border border-grey-300 text-gray-900 rounded p-2 w-full">
