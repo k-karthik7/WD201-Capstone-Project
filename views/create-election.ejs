@@ -9,8 +9,25 @@
     <title>Create Election</title>
 </head>
 <body>
-    <div>
-        <label for=""></label>
+    <div class="grid grid-cols-6 py-3">
+        <div class="col-start-3 col-span-2">
+            <div >
+                Create an Election
+            </div>
+            <div class="py-2">
+                <label for="electionName">Election Name</label>
+                <input type="text" name="electionName" placeholder="Elect name" class="border border-grey-300 text-gray-900 rounded p-2 w-full">
+            </div>
+            <div>
+                <label for="publicUrl">Public URL</label>
+                <input type="text" name="publicUrl" class="border border-grey-300 text-gray-900 rounded p-2 w-full">
+            </div>
+            <div class="py-2">
+                <button type="submit" class="text-white bg-green-600 hover:bg-green-800 font-medium rounded py-2 px-3">
+                    Create
+                </button>
+            </div>
+        </div>
     </div>
 </body>
 </html>

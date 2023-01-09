@@ -169,4 +169,9 @@ app.post(
   }
 );
 
+app.get("/election", (request, response) => {
+  response.render("create-election", {
+    csrfToken: request.csrfToken(),
+  });
+});
 module.exports = app;
